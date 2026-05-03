@@ -78,7 +78,7 @@ export default function ResultsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-10">
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex flex-wrap items-center gap-4 mb-6">
         <h1 className="text-2xl font-bold">Results</h1>
         {election?.status === "open" && (
           <span className="inline-block border-2 border-blue-600 bg-blue-50 px-3 py-1 text-sm font-bold text-blue-800 uppercase tracking-wide">
@@ -94,7 +94,7 @@ export default function ResultsPage() {
       <div className="space-y-6">
         {results.candidates.map((candidate) => (
           <div key={candidate.candidateId} className="border-2 border-gray-400 bg-white p-6">
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex flex-wrap items-center justify-between mb-3 gap-2">
               <span className="text-lg font-bold text-gray-800">{candidate.candidateName}</span>
               <span className="text-base font-bold text-gray-600">
                 {candidate.voteCount} votes ({candidate.percentage.toFixed(1)}%)

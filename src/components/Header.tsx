@@ -60,12 +60,12 @@ export default function Header() {
 
   return (
     <header className="border-b-2 border-gray-400 bg-white">
-      <div className="mx-auto max-w-4xl px-6 py-5 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-teal-800">Voting System</Link>
+      <div className="mx-auto max-w-4xl px-6 py-4 flex flex-col items-center sm:flex-row sm:items-center sm:justify-between">
+        <Link href="/" className="text-2xl font-bold text-teal-800 pb-3 sm:pb-0">VoteSys</Link>
         {loading ? (
-          <div className="w-32" />
+          <div className="w-32 h-6" />
         ) : (
-          <nav className="flex gap-6 text-base items-center relative">
+          <nav className="flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-6 text-base items-center">
             <Link href="/elections" className="flex items-center gap-2 text-gray-700 hover:text-teal-700">
               <FiList className="w-5 h-5" />
               <span>Elections</span>
@@ -77,13 +77,13 @@ export default function Header() {
               </Link>
             )}
             {isAuthenticated ? (
-              <div className="flex gap-6 items-center" ref={dropdownRef}>
+              <div className="flex flex-wrap gap-4 sm:gap-6 items-center" ref={dropdownRef}>
                 <button
                   onClick={() => setShowPasswordDropdown(!showPasswordDropdown)}
                   className="flex items-center gap-2 text-gray-700 hover:text-teal-700 cursor-pointer"
                 >
                   <FiKey className="w-5 h-5" />
-                  <span>Change Password</span>
+                  <span>Password</span>
                 </button>
                 <button
                   onClick={handleSignOut}

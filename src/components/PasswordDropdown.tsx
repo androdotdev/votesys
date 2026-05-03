@@ -59,7 +59,7 @@ export default function PasswordDropdown({ onClose }: PasswordDropdownProps) {
   };
 
   return (
-    <div className="absolute right-0 top-full mt-2 w-80 border-2 border-gray-400 bg-white z-50">
+    <div className="absolute right-0 top-full mt-2 w-full max-w-sm sm:w-80 border-2 border-gray-400 bg-white z-50">
       <div className="border-b-2 border-gray-400 px-6 py-4">
         <h3 className="text-lg font-bold">Change Password</h3>
       </div>

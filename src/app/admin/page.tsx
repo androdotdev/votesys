@@ -97,7 +97,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
         <h1 className="text-2xl font-bold">Admin Dashboard</h1>
         <Link href="/" className="text-lg font-bold text-teal-700">
           Back to site
@@ -114,19 +114,19 @@ export default function AdminDashboard() {
             <table className="w-full text-left">
               <thead className="border-b-2 border-gray-400 bg-gray-50">
                 <tr>
-                  <th className="px-6 py-4 text-base font-bold text-gray-700">Election</th>
-                  <th className="px-6 py-4 text-base font-bold text-gray-700">Status</th>
-                  <th className="px-6 py-4 text-base font-bold text-gray-700">Votes</th>
-                  <th className="px-6 py-4 text-base font-bold text-gray-700">Actions</th>
+                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Election</th>
+                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Status</th>
+                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Votes</th>
+                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {elections.map((election) => (
                   <tr key={election.id} className="border-b border-gray-200 last:border-b-0">
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <Link
                         href={`/admin/election/${election.id}`}
-                        className="text-base font-bold text-gray-800 hover:text-teal-700"
+                        className="text-base font-bold text-gray-800 hover:text-teal-700 break-words"
                       >
                         {election.title}
                       </Link>
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
                         })}
                       </p>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <span
                         className={`inline-block border-2 px-3 py-1 text-sm font-bold uppercase tracking-wide ${
                           election.status === "open"
@@ -151,15 +151,15 @@ export default function AdminDashboard() {
                         {election.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <span className="text-lg font-bold">{election.totalVotes}</span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <div className="flex flex-col gap-2">
                         {election.status === "draft" && (
                           <button
                             onClick={() => updateStatus(election.id, "open")}
-                            className="bg-emerald-700 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-800"
+                            className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800"
                           >
                             Open
                           </button>
@@ -167,20 +167,20 @@ export default function AdminDashboard() {
                         {election.status === "open" && (
                           <button
                             onClick={() => updateStatus(election.id, "closed")}
-                            className="bg-gray-700 px-4 py-2 text-sm font-bold text-white hover:bg-gray-800"
+                            className="bg-gray-700 px-4 py-3 text-sm font-bold text-white hover:bg-gray-800"
                           >
                             Close
                           </button>
                         )}
                         <Link
                           href={`/admin/election/${election.id}`}
-                          className="border-2 border-gray-400 px-4 py-2 text-sm font-bold text-center hover:border-teal-600 hover:text-teal-700"
+                          className="border-2 border-gray-400 px-4 py-3 text-sm font-bold text-center hover:border-teal-600 hover:text-teal-700"
                         >
                           Details
                         </Link>
                         <button
                           onClick={() => deleteElection(election.id)}
-                          className="border-2 border-red-300 px-4 py-2 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500"
+                          className="border-2 border-red-300 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500"
                         >
                           Delete
                         </button>

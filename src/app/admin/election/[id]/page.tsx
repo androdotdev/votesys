@@ -128,7 +128,7 @@ export default function AdminElectionPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-10">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold">{report.election.title}</h1>
           <p className="text-base text-gray-500 mt-1">
@@ -141,7 +141,7 @@ export default function AdminElectionPage() {
       </div>
 
       <div className="border-2 border-gray-400 bg-white p-6 mb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <span className="text-lg font-bold">Total Votes:</span>
             <span className="text-3xl font-bold ml-3">{report.totalVotes}</span>
@@ -160,11 +160,11 @@ export default function AdminElectionPage() {
             </span>
           </div>
         </div>
-        <div className="flex gap-2 mt-4">
+        <div className="flex flex-wrap gap-2 mt-4">
           {report.election.status === "draft" && (
             <button
               onClick={() => updateStatus("open")}
-              className="bg-emerald-700 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-800"
+              className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800"
             >
               Open Voting
             </button>
@@ -172,14 +172,14 @@ export default function AdminElectionPage() {
           {report.election.status === "open" && (
             <button
               onClick={() => updateStatus("closed")}
-              className="bg-gray-700 px-4 py-2 text-sm font-bold text-white hover:bg-gray-800"
+              className="bg-gray-700 px-4 py-3 text-sm font-bold text-white hover:bg-gray-800"
             >
               Close Voting
             </button>
           )}
           <button
             onClick={() => setShowVoters(!showVoters)}
-            className="border-2 border-gray-400 px-4 py-2 text-sm font-bold hover:border-teal-600 hover:text-teal-700"
+            className="border-2 border-gray-400 px-4 py-3 text-sm font-bold hover:border-teal-600 hover:text-teal-700"
           >
             {showVoters ? "Hide Voters" : "View Voters List"} ({voters.length})
           </button>
@@ -226,7 +226,7 @@ export default function AdminElectionPage() {
           {report.candidates.map((c) => (
             <div
               key={c.candidateId}
-              className="border-2 border-gray-400 p-4 flex items-center justify-between"
+              className="border-2 border-gray-400 p-4 flex flex-wrap items-center justify-between gap-4"
             >
               <div>
                 <span className="text-lg font-bold">{c.candidateName}</span>
@@ -244,7 +244,7 @@ export default function AdminElectionPage() {
                 </div>
                 <button
                   onClick={() => removeCandidate(c.candidateId)}
-                  className="border-2 border-red-300 px-3 py-2 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500"
+                  className="border-2 border-red-300 px-3 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500"
                 >
                   Remove
                 </button>

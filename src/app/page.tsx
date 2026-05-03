@@ -9,7 +9,7 @@ export default function Home() {
         <div className="flex flex-col-reverse lg:flex-row items-center gap-12">
           {/* Left: Text + CTAs */}
           <div className="flex-1 text-center lg:text-left">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-800">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-800">
               VoteSys
             </h1>
             <p className="mt-4 text-xl text-gray-600">
@@ -18,13 +18,13 @@ export default function Home() {
             <div className="mt-8 flex gap-6 justify-center lg:justify-start">
               <Link
                 href="/sign-in"
-                className="bg-teal-700 px-8 py-3 text-lg font-bold text-white hover:bg-teal-800"
+                className="bg-teal-700 px-8 py-4 text-lg font-bold text-white hover:bg-teal-800"
               >
                 Sign In
               </Link>
               <Link
                 href="/sign-up"
-                className="border-2 border-teal-700 px-8 py-3 text-lg font-bold text-teal-700 hover:bg-teal-50"
+                className="border-2 border-teal-700 px-8 py-4 text-lg font-bold text-teal-700 hover:bg-teal-50"
               >
                 Sign Up
               </Link>
@@ -42,7 +42,7 @@ export default function Home() {
       <section className="mx-auto max-w-4xl px-6 py-14">
         <h2 className="text-2xl font-bold text-center mb-10">How It Works</h2>
         <div className="grid gap-8 sm:grid-cols-3">
-          <div className="border-2 border-gray-400 bg-white p-8 text-center">
+          <div className="border-2 border-gray-400 bg-white p-6 sm:p-8 text-center">
             <span className="inline-flex items-center justify-center w-12 h-12 border-2 border-teal-700 bg-teal-50 text-2xl font-bold text-teal-700 mb-4">
               1
             </span>
@@ -51,7 +51,7 @@ export default function Home() {
               Explore all active and upcoming elections.
             </p>
           </div>
-          <div className="border-2 border-gray-400 bg-white p-8 text-center">
+          <div className="border-2 border-gray-400 bg-white p-6 sm:p-8 text-center">
             <span className="inline-flex items-center justify-center w-12 h-12 border-2 border-teal-700 bg-teal-50 text-2xl font-bold text-teal-700 mb-4">
               2
             </span>
@@ -60,7 +60,7 @@ export default function Home() {
               Create an account or sign in to verify your identity.
             </p>
           </div>
-          <div className="border-2 border-gray-400 bg-white p-8 text-center">
+          <div className="border-2 border-gray-400 bg-white p-6 sm:p-8 text-center">
             <span className="inline-flex items-center justify-center w-12 h-12 border-2 border-teal-700 bg-teal-50 text-2xl font-bold text-teal-700 mb-4">
               3
             </span>
@@ -80,7 +80,7 @@ export default function Home() {
         </p>
         <Link
           href="/elections"
-          className="inline-block bg-teal-700 px-8 py-3 text-lg font-bold text-white hover:bg-teal-800"
+          className="inline-block bg-teal-700 px-8 py-4 text-lg font-bold text-white hover:bg-teal-800"
         >
           Browse Elections
         </Link>

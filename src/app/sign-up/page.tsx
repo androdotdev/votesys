@@ -48,7 +48,7 @@ export default function SignUpPage() {
 
   return (
     <div className="mx-auto max-w-lg px-6 py-16">
-      <div className="border-2 border-gray-400 bg-white p-8">
+      <div className="border-2 border-gray-400 bg-white p-6 sm:p-8">
         <h1 className="text-2xl font-bold text-center text-gray-800">Create Account</h1>
 
         {error && (
@@ -66,7 +66,7 @@ export default function SignUpPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="mt-2 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+              className="mt-2 w-full border-2 border-gray-400 px-4 py-4 text-base focus:border-teal-600 focus:outline-none"
             />
           </div>
           <div>
@@ -79,7 +79,7 @@ export default function SignUpPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-2 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+              className="mt-2 w-full border-2 border-gray-400 px-4 py-4 text-base focus:border-teal-600 focus:outline-none"
             />
           </div>
           <div>
@@ -92,7 +92,7 @@ export default function SignUpPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-2 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+              className="mt-2 w-full border-2 border-gray-400 px-4 py-4 text-base focus:border-teal-600 focus:outline-none"
             />
           </div>
           <button
