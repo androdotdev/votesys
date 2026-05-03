@@ -21,6 +21,6 @@ body {
 }
 
 a {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration: none;
 }
+

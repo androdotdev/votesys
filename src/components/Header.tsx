@@ -32,14 +32,14 @@ export default function Header() {
   return (
     <header className="border-b-2 border-gray-400 bg-white">
       <div className="mx-auto max-w-4xl px-6 py-5 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-teal-800 no-underline">Voting System</Link>
+        <Link href="/" className="text-2xl font-bold text-teal-800">Voting System</Link>
         {loading ? (
           <div className="w-32" />
         ) : (
           <nav className="flex gap-6 text-base items-center">
-            <Link href="/" className="text-gray-700 hover:text-teal-700 no-underline">Elections</Link>
+            <Link href="/" className="text-gray-700 hover:text-teal-700">Elections</Link>
             {isAdmin && (
-              <Link href="/admin" className="text-gray-700 hover:text-teal-700 no-underline">Admin</Link>
+              <Link href="/admin" className="text-gray-700 hover:text-teal-700">Admin</Link>
             )}
             {isAuthenticated ? (
               <button
@@ -49,7 +49,7 @@ export default function Header() {
                 Sign Out
               </button>
             ) : (
-              <Link href="/sign-in" className="text-gray-700 hover:text-teal-700 no-underline">Sign In</Link>
+              <Link href="/sign-in" className="text-gray-700 hover:text-teal-700">Sign In</Link>
             )}
           </nav>
         )}

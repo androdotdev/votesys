@@ -116,7 +116,7 @@ export default function ElectionPage() {
           <p className="mt-4 text-lg text-gray-500">This election has ended.</p>
           <Link
             href={`/results/${election.id}`}
-            className="mt-6 inline-block bg-teal-700 px-6 py-3 text-lg font-bold text-white hover:bg-teal-800 no-underline"
+            className="mt-6 inline-block bg-teal-700 px-6 py-3 text-lg font-bold text-white hover:bg-teal-800"
           >
             View Results
           </Link>

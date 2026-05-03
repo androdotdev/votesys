@@ -126,7 +126,7 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4">
                       <Link
                         href={`/admin/election/${election.id}`}
-                        className="text-base font-bold text-gray-800 no-underline hover:text-teal-700"
+                        className="text-base font-bold text-gray-800 hover:text-teal-700"
                       >
                         {election.title}
                       </Link>

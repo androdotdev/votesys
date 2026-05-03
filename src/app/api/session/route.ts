@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { db } from "@/db";
+import { user } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function GET() {
   try {
@@ -12,13 +15,18 @@ export async function GET() {
       return NextResponse.json({ authenticated: false });
     }
 
+    const dbUser = await db.query.user.findFirst({
+      where: eq(user.id, session.user.id),
+      columns: { role: true },
+    });
+
     return NextResponse.json({
       authenticated: true,
       user: {
         id: session.user.id,
         name: session.user.name,
         email: session.user.email,
-        role: (session.user as { role?: string }).role,
+        role: dbUser?.role ?? "voter",
       },
     });
   } catch {

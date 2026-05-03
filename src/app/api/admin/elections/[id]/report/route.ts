@@ -44,6 +44,8 @@ export async function GET(
         id: election.id,
         title: election.title,
         status: election.status,
+        startsAt: election.startsAt.toISOString(),
+        endsAt: election.endsAt.toISOString(),
       },
       candidates: results.map((r) => ({
         candidateId: r.candidateId,

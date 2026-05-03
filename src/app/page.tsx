@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import BallotIllustration from "@/components/BallotIllustration";
 
 interface Election {
   id: string;
@@ -28,26 +29,36 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <section className="mx-auto max-w-4xl px-6 py-16 text-center border-b-2 border-gray-400">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-800">
-          VoteSys
-        </h1>
-        <p className="mt-4 text-xl text-gray-600">
-          Secure, transparent, and accessible online voting for everyone.
-        </p>
-        <div className="mt-8 flex gap-6 justify-center">
-          <Link
-            href="/sign-in"
-            className="bg-teal-700 px-8 py-3 text-lg font-bold text-white hover:bg-teal-800 no-underline"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/sign-up"
-            className="border-2 border-teal-700 px-8 py-3 text-lg font-bold text-teal-700 hover:bg-teal-50 no-underline"
-          >
-            Sign Up
-          </Link>
+      <section className="mx-auto max-w-6xl px-6 py-16 border-b-2 border-gray-400">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-12">
+          {/* Left: Text + CTAs */}
+          <div className="flex-1 text-center lg:text-left">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-800">
+              VoteSys
+            </h1>
+            <p className="mt-4 text-xl text-gray-600">
+              Secure, transparent, and accessible online voting for everyone.
+            </p>
+            <div className="mt-8 flex gap-6 justify-center lg:justify-start">
+              <Link
+                href="/sign-in"
+                className="bg-teal-700 px-8 py-3 text-lg font-bold text-white hover:bg-teal-800"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/sign-up"
+                className="border-2 border-teal-700 px-8 py-3 text-lg font-bold text-teal-700 hover:bg-teal-50"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
+
+          {/* Right: Illustration */}
+          <div className="w-48 h-48 lg:w-80 lg:h-80 flex-shrink-0">
+            <BallotIllustration />
+          </div>
         </div>
       </section>
 
@@ -99,7 +110,7 @@ export default function Home() {
               <Link
                 key={election.id}
                 href={`/election/${election.id}`}
-                className="block border-2 border-gray-400 bg-white p-6 no-underline hover:border-teal-600 transition-colors"
+                className="block border-2 border-gray-400 bg-white p-6 hover:border-teal-600 transition-colors"
               >
                 <h3 className="text-xl font-bold text-gray-800">{election.title}</h3>
                 <div className="mt-3">
