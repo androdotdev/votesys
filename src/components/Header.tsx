@@ -2,7 +2,9 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { createAuthClient } from "better-auth/react";
+import { FiList, FiShield, FiLogIn, FiLogOut, FiKey } from "react-icons/fi";
 import PasswordDropdown from "./PasswordDropdown";
 
 const authClient = createAuthClient();
@@ -11,19 +13,27 @@ export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [signOutLoading, setSignOutLoading] = useState(false);
   const [showPasswordDropdown, setShowPasswordDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
+    let mounted = true;
     fetch("/api/session")
       .then((res) => res.json())
       .then((data) => {
-        setIsAuthenticated(data.authenticated);
-        setIsAdmin(data.user?.role === "admin");
-        setLoading(false);
+        if (mounted) {
+          setIsAuthenticated(data.authenticated);
+          setIsAdmin(data.user?.role === "admin");
+          setLoading(false);
+        }
       })
-      .catch(() => setLoading(false));
-  }, []);
+      .catch(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => { mounted = false; };
+  }, [pathname]);
 
   useEffect(() => {
     if (!showPasswordDropdown) return;
@@ -39,9 +49,12 @@ export default function Header() {
   }, [showPasswordDropdown]);
 
   const handleSignOut = async () => {
+    setSignOutLoading(true);
     await authClient.signOut();
+    setSignOutLoading(false);
     setIsAuthenticated(false);
     setIsAdmin(false);
+    setShowPasswordDropdown(false);
     window.location.href = "/";
   };
 
@@ -53,28 +66,48 @@ export default function Header() {
           <div className="w-32" />
         ) : (
           <nav className="flex gap-6 text-base items-center relative">
-            <Link href="/" className="text-gray-700 hover:text-teal-700">Elections</Link>
+            <Link href="/elections" className="flex items-center gap-2 text-gray-700 hover:text-teal-700">
+              <FiList className="w-5 h-5" />
+              <span>Elections</span>
+            </Link>
             {isAdmin && (
-              <Link href="/admin" className="text-gray-700 hover:text-teal-700">Admin</Link>
+              <Link href="/admin" className="flex items-center gap-2 text-gray-700 hover:text-teal-700">
+                <FiShield className="w-5 h-5" />
+                <span>Admin</span>
+              </Link>
             )}
             {isAuthenticated ? (
               <div className="flex gap-6 items-center" ref={dropdownRef}>
                 <button
                   onClick={() => setShowPasswordDropdown(!showPasswordDropdown)}
-                  className="text-gray-700 hover:text-teal-700 cursor-pointer"
+                  className="flex items-center gap-2 text-gray-700 hover:text-teal-700 cursor-pointer"
                 >
-                  Change Password
+                  <FiKey className="w-5 h-5" />
+                  <span>Change Password</span>
                 </button>
                 <button
                   onClick={handleSignOut}
-                  className="text-gray-700 hover:text-teal-700 cursor-pointer"
+                  disabled={signOutLoading}
+                  className="flex items-center gap-2 text-gray-700 hover:text-teal-700 cursor-pointer disabled:opacity-50"
                 >
-                  Sign Out
+                  {signOutLoading ? (
+                    <div className="flex gap-1">
+                      <span className="w-1.5 h-1.5 bg-teal-700 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-1.5 h-1.5 bg-teal-700 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-1.5 h-1.5 bg-teal-700 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    </div>
+                  ) : (
+                    <FiLogOut className="w-5 h-5" />
+                  )}
+                  <span>{signOutLoading ? "Signing out" : "Sign Out"}</span>
                 </button>
                 {showPasswordDropdown && <PasswordDropdown onClose={() => setShowPasswordDropdown(false)} />}
               </div>
             ) : (
-              <Link href="/sign-in" className="text-gray-700 hover:text-teal-700">Sign In</Link>
+              <Link href="/sign-in" className="flex items-center gap-2 text-gray-700 hover:text-teal-700">
+                <FiLogIn className="w-5 h-5" />
+                <span>Sign In</span>
+              </Link>
             )}
           </nav>
         )}
