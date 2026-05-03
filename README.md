@@ -58,12 +58,9 @@ Online voting system MVP built with Next.js 15, Neon PostgreSQL, Drizzle ORM, an
 
 ### Admin Access
 
-The seed script creates an admin account:
+An admin account is created automatically by the seed script. Contact the system administrator for credentials.
 
-- **Email:** `admin@votesys.in`
-- **Password:** `votesys@admin@1234`
-
-> These credentials are seeded via the `ADMIN_PASSWORD_HASH` in `.env`. Do not commit `.env` to version control.
+> The `ADMIN_PASSWORD_HASH` in `.env` is required for seeding. Never commit `.env` to version control.
 
 ## Available Scripts
 
