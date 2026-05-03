@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Voting System
+
+Online voting system MVP built with Next.js 15, Neon PostgreSQL, Drizzle ORM, and Better Auth.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 15 (App Router) |
+| Database | Neon PostgreSQL |
+| ORM | Drizzle ORM |
+| Auth | Better Auth |
+| Styling | Tailwind CSS |
+| Language | TypeScript |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+
+- A Neon PostgreSQL database (free tier works)
+
+### Setup
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit `.env` with your values:
+   ```
+   DATABASE_URL=postgresql://...
+   BETTER_AUTH_SECRET=your-random-secret
+   BETTER_AUTH_URL=http://localhost:3000
+   ```
+
+3. **Push database schema**
+   ```bash
+   npm run db:push
+   ```
+
+4. **Seed initial data**
+   ```bash
+   npm run db:seed
+   ```
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open** [http://localhost:3000](http://localhost:3000)
+
+### Admin Access
+
+The seed script creates an admin account:
+
+- **Email:** `admin@votesys.in`
+- **Password:** `votesys@admin@1234`
+
+> These credentials are seeded via the `ADMIN_PASSWORD_HASH` in `.env`. Do not commit `.env` to version control.
+
+## Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm run db:push` | Push schema changes directly to database (dev) |
+| `npm run db:generate` | Generate migration files |
+| `npm run db:migrate` | Apply migration files |
+| `npm run db:seed` | Seed admin user and sample election |
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── auth/[...all]/       # Better Auth catch-all
+│   │   ├── elections/            # Public election endpoints
+│   │   ├── votes/                # Authenticated voting
+│   │   ├── session/              # Session check (role-aware)
+│   │   └── admin/                # Admin-only endpoints
+│   ├── election/[id]/            # Election voting page
+│   ├── results/[id]/             # Live results page
+│   ├── admin/                    # Admin dashboard
+│   │   └── election/[id]/        # Admin election detail
+│   ├── sign-in/                  # Sign-in page
+│   ├── sign-up/                  # Sign-up page
+│   ├── page.tsx                  # Home (redirects if unauthenticated)
+│   └── layout.tsx                # Root layout with conditional nav
+├── db/
+│   ├── schema.ts                 # All Drizzle table definitions
+│   ├── index.ts                  # Drizzle client
+│   └── seed.ts                   # Seed script
+├── lib/
+│   ├── auth.ts                   # Better Auth configuration
+│   ├── admin.ts                  # Admin role guard helper
+│   └── elections.ts              # Auto-close expired elections
+└── components/
+    └── Header.tsx                # Nav with role-based links
+middleware.ts                     # Route protection
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Public
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/elections` | List all open elections (auto-closes expired) |
+| `GET` | `/api/elections/:id` | Get election with candidates |
+| `GET` | `/api/elections/:id/results` | Get vote counts per candidate |
 
-## Learn More
+### Authenticated
 
-To learn more about Next.js, take a look at the following resources:
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/votes` | Cast a vote (checks receipt, transaction-safe) |
+| `GET` | `/api/votes/me/:electionId` | Check if user has voted |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Admin Only
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/admin/elections` | Create election |
+| `PATCH` | `/api/admin/elections/:id` | Update status (draft/open/closed) |
+| `DELETE` | `/api/admin/elections/:id` | Delete election |
+| `POST` | `/api/admin/candidates` | Add candidate |
+| `DELETE` | `/api/admin/candidates/:id` | Remove candidate |
+| `GET` | `/api/admin/elections/:id/voters` | List who voted (user IDs) |
+| `GET` | `/api/admin/elections/:id/report` | Full vote report |
 
-## Deploy on Vercel
+## Security
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Vote Anonymity**: The `votes` table stores no user identity. The `voteReceipts` table tracks who voted (for enforcement) without linking to what they voted for.
+- **Atomic Voting**: Vote casting uses a Drizzle transaction — the receipt and vote are inserted together, preventing partial failures.
+- **Role-Based Access**: Admin routes enforce `role === "admin"` via `requireAdmin()` middleware helper.
+- **Auto-Close**: Expired elections are automatically closed on every request to `GET /api/elections`, `GET /api/elections/:id`, and `POST /api/votes`.
