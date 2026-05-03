@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { createAuthClient } from "better-auth/react";
+import PasswordDropdown from "./PasswordDropdown";
 
 const authClient = createAuthClient();
 
@@ -10,6 +11,8 @@ export default function Header() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showPasswordDropdown, setShowPasswordDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch("/api/session")
@@ -21,6 +24,19 @@ export default function Header() {
       })
       .catch(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!showPasswordDropdown) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowPasswordDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showPasswordDropdown]);
 
   const handleSignOut = async () => {
     await authClient.signOut();
@@ -36,18 +52,27 @@ export default function Header() {
         {loading ? (
           <div className="w-32" />
         ) : (
-          <nav className="flex gap-6 text-base items-center">
+          <nav className="flex gap-6 text-base items-center relative">
             <Link href="/" className="text-gray-700 hover:text-teal-700">Elections</Link>
             {isAdmin && (
               <Link href="/admin" className="text-gray-700 hover:text-teal-700">Admin</Link>
             )}
             {isAuthenticated ? (
-              <button
-                onClick={handleSignOut}
-                className="text-gray-700 hover:text-teal-700 cursor-pointer"
-              >
-                Sign Out
-              </button>
+              <div className="flex gap-6 items-center" ref={dropdownRef}>
+                <button
+                  onClick={() => setShowPasswordDropdown(!showPasswordDropdown)}
+                  className="text-gray-700 hover:text-teal-700 cursor-pointer"
+                >
+                  Change Password
+                </button>
+                <button
+                  onClick={handleSignOut}
+                  className="text-gray-700 hover:text-teal-700 cursor-pointer"
+                >
+                  Sign Out
+                </button>
+                {showPasswordDropdown && <PasswordDropdown onClose={() => setShowPasswordDropdown(false)} />}
+              </div>
             ) : (
               <Link href="/sign-in" className="text-gray-700 hover:text-teal-700">Sign In</Link>
             )}

@@ -1,10 +1,10 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/neon-serverless";
+import { Pool } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
 import { elections, candidates, voteReceipts, votes, user, account, session } from "@/db/schema";
 
-const sql = neon(process.env.DATABASE_URL!);
-const db = drizzle(sql, { schema: { elections, candidates, voteReceipts, votes, user, account, session } });
+const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+const db = drizzle(pool, { schema: { elections, candidates, voteReceipts, votes, user, account, session } });
 
 async function seed() {
   const passwordHash = process.env.ADMIN_PASSWORD_HASH;

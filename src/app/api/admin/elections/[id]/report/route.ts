@@ -37,7 +37,7 @@ export async function GET(
       .groupBy(candidates.id, candidates.name)
       .orderBy(candidates.name);
 
-    const totalVotes = results.reduce((sum, r) => sum + Number(r.voteCount), 0);
+    const totalVotes = results.reduce((sum: number, r) => sum + Number(r.voteCount), 0);
 
     return NextResponse.json({
       election: {
