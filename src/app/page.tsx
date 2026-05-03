@@ -1,31 +1,7 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import BallotIllustration from "@/components/BallotIllustration";
 
-interface Election {
-  id: string;
-  title: string;
-  status: string;
-  startsAt: string;
-  endsAt: string;
-}
-
 export default function Home() {
-  const [elections, setElections] = useState<Election[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/elections")
-      .then((res) => res.json())
-      .then((data) => {
-        setElections(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
   return (
     <div>
       {/* Hero */}
@@ -72,7 +48,7 @@ export default function Home() {
             </span>
             <h3 className="text-xl font-bold">Browse Elections</h3>
             <p className="mt-2 text-base text-gray-500">
-              View all active and upcoming elections listed below.
+              Explore all active and upcoming elections.
             </p>
           </div>
           <div className="border-2 border-gray-400 bg-white p-8 text-center">
@@ -96,48 +72,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Election List */}
-      <section className="mx-auto max-w-4xl px-6 py-10">
-        <h2 className="text-2xl font-bold mb-8">Current Elections</h2>
-
-        {loading ? (
-          <p className="text-lg text-gray-500 text-center py-12">Loading elections...</p>
-        ) : elections.length === 0 ? (
-          <p className="text-lg text-gray-500 text-center py-12">No elections available at this time.</p>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2">
-            {elections.map((election) => (
-              <Link
-                key={election.id}
-                href={`/election/${election.id}`}
-                className="block border-2 border-gray-400 bg-white p-6 hover:border-teal-600 transition-colors"
-              >
-                <h3 className="text-xl font-bold text-gray-800">{election.title}</h3>
-                <div className="mt-3">
-                  <span
-                    className={`inline-block border-2 px-3 py-1 text-sm font-bold uppercase tracking-wide ${
-                      election.status === "open"
-                        ? "border-emerald-600 bg-emerald-50 text-emerald-800"
-                        : election.status === "closed"
-                        ? "border-gray-500 bg-gray-100 text-gray-700"
-                        : "border-amber-600 bg-amber-50 text-amber-800"
-                    }`}
-                  >
-                    {election.status}
-                  </span>
-                </div>
-                <p className="mt-4 text-base text-gray-500">
-                  Closes:{" "}
-                  {new Date(election.endsAt).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </p>
-              </Link>
-            ))}
-          </div>
-        )}
+      {/* Browse Elections CTA */}
+      <section className="mx-auto max-w-4xl px-6 py-14 text-center border-t-2 border-gray-400">
+        <h2 className="text-2xl font-bold mb-4">Ready to Vote?</h2>
+        <p className="text-lg text-gray-500 mb-8">
+          Check out all available elections and cast your ballot.
+        </p>
+        <Link
+          href="/elections"
+          className="inline-block bg-teal-700 px-8 py-3 text-lg font-bold text-white hover:bg-teal-800"
+        >
+          Browse Elections
+        </Link>
       </section>
     </div>
   );
