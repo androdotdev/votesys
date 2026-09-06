@@ -1,7 +1,19 @@
 import Link from "next/link";
 import BallotIllustration from "@/components/BallotIllustration";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-export default function Home() {
+export default async function Home() {
+  let isAuthenticated = false;
+  let isAdmin = false;
+  let userName: string | null = null;
+  try {
+    const session = await auth.api.getSession({ headers: await headers() });
+    isAuthenticated = !!session?.user;
+    isAdmin = (session?.user as { role?: string })?.role === "admin";
+    userName = session?.user?.name ?? null;
+  } catch {}
+
   return (
     <div>
       {/* Hero */}
@@ -13,21 +25,28 @@ export default function Home() {
               PollForge
             </h1>
             <p className="mt-3 sm:mt-4 text-lg sm:text-xl text-slate-600 max-w-xl mx-auto lg:mx-0">
-              Secure, transparent, and accessible online voting for everyone.
+              {isAuthenticated ? `Welcome${userName ? `, ${userName}` : ""} — ready to vote?` : "Secure, transparent, and accessible online voting for everyone."}
             </p>
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center lg:justify-start">
-              <Link
-                href="/sign-in"
-                className="bg-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white hover:bg-indigo-700 text-center"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/sign-up"
-                className="border-2 border-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-indigo-600 hover:bg-indigo-50 text-center"
-              >
-                Sign Up
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link href="/elections" className="bg-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white hover:bg-indigo-700 text-center">
+                    Browse Elections
+                  </Link>
+                  <Link href={isAdmin ? "/admin" : "/elections"} className="border-2 border-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-indigo-600 hover:bg-indigo-50 text-center">
+                    {isAdmin ? "Admin Dashboard" : "View Elections"}
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/sign-in" className="bg-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white hover:bg-indigo-700 text-center">
+                    Sign In
+                  </Link>
+                  <Link href="/sign-up" className="border-2 border-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-indigo-600 hover:bg-indigo-50 text-center">
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
 

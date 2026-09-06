@@ -9,10 +9,10 @@ import PasswordDropdown from "./PasswordDropdown";
 
 const authClient = createAuthClient();
 
-export default function Header() {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+export default function Header({ initialAuthenticated = false, initialIsAdmin = false }: { initialAuthenticated?: boolean; initialIsAdmin?: boolean }) {
+  const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
+  const [isAuthenticated, setIsAuthenticated] = useState(initialAuthenticated);
+  const [loading, setLoading] = useState(false);
   const [signOutLoading, setSignOutLoading] = useState(false);
   const [showPasswordDropdown, setShowPasswordDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
