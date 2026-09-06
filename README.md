@@ -15,8 +15,7 @@ Online voting system MVP built with Next.js 16, Neon PostgreSQL, Drizzle ORM, an
 
 ## Live Demo
 
-> After Vercel project rename, update this link:
-> `https://pollforge.vercel.app` (auto-generated from repo name) — replace with your actual deployment URL.
+> `https://pollforge-app.vercel.app` (auto-generated from repo name)
 
 ## Getting Started
 
@@ -63,7 +62,7 @@ Online voting system MVP built with Next.js 16, Neon PostgreSQL, Drizzle ORM, an
 
 ### Admin Access
 
-An admin account is created automatically by the seed script (`admin@pollforge.vercel.app`). Contact the system administrator for credentials.
+An admin account is created automatically by the seed script (`admin@pollforge-app.vercel.app`). Contact the system administrator for credentials.
 
 > The `ADMIN_PASSWORD_HASH` in `.env` is required for seeding. Never commit `.env` to version control.
 
@@ -102,7 +101,7 @@ src/
 ├── db/
 │   ├── schema.ts                 # All Drizzle table definitions
 │   ├── index.ts                  # Drizzle client
-│   └── seed.ts                   # Seed script (creates admin@pollforge.vercel.app)
+│   └── seed.ts                   # Seed script (creates admin@pollforge-app.vercel.app)
 ├── lib/
 │   ├── auth.ts                   # Better Auth configuration
 │   ├── admin.ts                  # Admin role guard helper
@@ -150,6 +149,6 @@ proxy.ts                         # Route protection (auth guard for /election, /
 
 ## Repository
 
-- GitHub: `https://github.com/androdotdev/pollforge` (renamed from `votesys`)
-- Previous name references (`votesys`, `VoteSys`, `voting-sys`) have been replaced with `PollForge` / `pollforge`. See `git log` for rename commit.
+- GitHub: `https://github.com/androdotdev/pollforge-app` (renamed from `votesys` → `pollforge` → `pollforge-app`)
+- Previous name references (`votesys`, `VoteSys`, `voting-sys`) have been replaced with `PollForge` / `pollforge-app`. See `git log` for rename commits.
 

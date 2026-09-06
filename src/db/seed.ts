@@ -15,7 +15,7 @@ async function seed() {
 
   // Seed admin user
   const existingAdmin = await db.query.user.findFirst({
-    where: eq(user.email, "admin@pollforge.vercel.app"),
+    where: eq(user.email, "admin@pollforge-app.vercel.app"),
   });
 
   if (!existingAdmin) {
@@ -24,7 +24,7 @@ async function seed() {
     await db.insert(user).values({
       id: userId,
       name: "Admin",
-      email: "admin@pollforge.vercel.app",
+      email: "admin@pollforge-app.vercel.app",
       role: "admin",
       emailVerified: true,
     });
@@ -33,11 +33,11 @@ async function seed() {
       id: "admin-cred-" + Date.now(),
       userId,
       providerId: "credential",
-      accountId: "admin@pollforge.vercel.app",
+      accountId: "admin@pollforge-app.vercel.app",
       password: passwordHash,
     });
 
-    console.log("Created admin user: admin@pollforge.vercel.app");
+    console.log("Created admin user: admin@pollforge-app.vercel.app");
   } else {
     console.log("Admin user already exists");
   }
