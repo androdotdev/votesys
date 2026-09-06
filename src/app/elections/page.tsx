@@ -27,12 +27,13 @@ export default function ElectionsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-10">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">All Elections</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold">All Polls</h1>
+      <p className="mt-2 mb-6 sm:mb-8 text-sm text-slate-500">Internal polls for your community — not political elections. No government affiliation.</p>
 
       {loading ? (
-        <p className="text-lg text-slate-500 text-center py-12">Loading elections...</p>
+        <p className="text-lg text-slate-500 text-center py-12">Loading polls...</p>
       ) : elections.length === 0 ? (
-        <p className="text-lg text-slate-500 text-center py-12">No elections available at this time.</p>
+        <p className="text-lg text-slate-500 text-center py-12">No polls available at this time.</p>
       ) : (
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {elections.map((election) => (

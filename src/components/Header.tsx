@@ -79,7 +79,7 @@ export default function Header({ initialAuthenticated = false, initialIsAdmin = 
           <nav className={`sm:flex flex-wrap items-center gap-4 sm:gap-6 text-base ${mobileOpen ? "flex flex-col absolute left-0 top-full w-full bg-white border-b-2 border-slate-300 px-4 py-4 sm:static sm:w-auto sm:border-0 sm:p-0 sm:flex-row" : "hidden sm:flex"}`}>
             <Link href="/elections" onClick={()=>setMobileOpen(false)} className="flex items-center gap-2 text-slate-700 hover:text-indigo-600 py-2 sm:py-0">
               <FiList className="w-5 h-5" />
-              <span>Elections</span>
+              <span>Polls</span>
             </Link>
             {isAdmin && (
               <Link href="/admin" onClick={()=>setMobileOpen(false)} className="flex items-center gap-2 text-slate-700 hover:text-indigo-600 py-2 sm:py-0">

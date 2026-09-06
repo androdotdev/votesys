@@ -50,6 +50,10 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-800">
         <Header initialAuthenticated={initialAuthenticated} initialIsAdmin={initialIsAdmin} />
         <main className="flex-1">{children}</main>
+        <footer className="border-t-2 border-slate-300 bg-white py-4 text-center text-xs sm:text-sm text-slate-500">
+          <span className="inline-block border border-amber-300 bg-amber-50 text-amber-800 px-2 py-1 font-bold mr-2">Not political</span>
+          PollForge polls are internal only — not affiliated with any government election.
+        </footer>
       </body>
     </html>
   );

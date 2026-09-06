@@ -25,13 +25,17 @@ export default async function Home() {
               PollForge
             </h1>
             <p className="mt-3 sm:mt-4 text-lg sm:text-xl text-slate-600 max-w-xl mx-auto lg:mx-0">
-              {isAuthenticated ? `Welcome${userName ? `, ${userName}` : ""} — ready to vote?` : "Secure, transparent, and accessible online voting for everyone."}
+              {isAuthenticated ? `Welcome${userName ? `, ${userName}` : ""} — ready to vote?` : "Secure, transparent, and accessible online polling for everyone."}
+            </p>
+            <p className="mt-2 text-xs sm:text-sm text-slate-500 max-w-xl mx-auto lg:mx-0">
+              <span className="inline-block border border-amber-300 bg-amber-50 text-amber-800 px-2 py-1 font-bold">Not political</span>
+              <span className="ml-2">Internal polls for teams, classrooms & communities — not government elections.</span>
             </p>
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center lg:justify-start">
               {isAuthenticated ? (
                 <>
                   <Link href="/elections" className="bg-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white hover:bg-indigo-700 text-center">
-                    Browse Elections
+                    Browse Polls
                   </Link>
                   {isAdmin ? (
                     <Link href="/admin" className="border-2 border-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-indigo-600 hover:bg-indigo-50 text-center">
@@ -71,9 +75,9 @@ export default async function Home() {
             <span className="inline-flex items-center justify-center w-12 h-12 border-2 border-indigo-600 bg-indigo-50 text-2xl font-bold text-indigo-600 mb-4">
               1
             </span>
-            <h3 className="text-xl font-bold">Browse Elections</h3>
+            <h3 className="text-xl font-bold">Browse Polls</h3>
             <p className="mt-2 text-base text-slate-500">
-              Explore all active and upcoming elections.
+              Explore all active polls. Nothing to do with politics — just your community.
             </p>
           </div>
           <div className="border-2 border-slate-300 bg-white p-6 sm:p-8 text-center">
@@ -97,18 +101,19 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Browse Elections CTA */}
+      {/* Browse Polls CTA */}
       <section className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14 text-center border-t-2 border-slate-300">
         <h2 className="text-2xl font-bold mb-4">Ready to Vote?</h2>
         <p className="text-lg text-slate-500 mb-8">
-          Check out all available elections and cast your ballot.
+          Check out all available polls and cast your vote — internal team polls, not political elections.
         </p>
         <Link
           href="/elections"
           className="inline-block bg-indigo-600 px-8 py-4 text-lg font-bold text-white hover:bg-indigo-700"
         >
-          Browse Elections
+          Browse Polls
         </Link>
+        <p className="mt-4 text-xs text-slate-500">PollForge polls are not affiliated with any government election.</p>
       </section>
     </div>
   );
