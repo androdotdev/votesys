@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Voting System",
-  description: "Online Voting System",
+  title: "PollForge",
+  description: "PollForge — Secure, transparent, and accessible online voting",
 };
 
 export default function RootLayout({

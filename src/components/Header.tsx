@@ -61,7 +61,7 @@ export default function Header() {
   return (
     <header className="border-b-2 border-gray-400 bg-white">
       <div className="mx-auto max-w-4xl px-6 py-4 flex flex-col items-center sm:flex-row sm:items-center sm:justify-between">
-        <Link href="/" className="text-2xl font-bold text-teal-800 pb-3 sm:pb-0">VoteSys</Link>
+        <Link href="/" className="text-2xl font-bold text-teal-800 pb-3 sm:pb-0">PollForge</Link>
         {loading ? (
           <div className="w-32 h-6" />
         ) : (

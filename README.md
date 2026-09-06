@@ -1,17 +1,22 @@
-# Voting System
+# PollForge
 
-Online voting system MVP built with Next.js 15, Neon PostgreSQL, Drizzle ORM, and Better Auth.
+Online voting system MVP built with Next.js 16, Neon PostgreSQL, Drizzle ORM, and Better Auth.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 15 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | Database | Neon PostgreSQL |
 | ORM | Drizzle ORM |
-| Auth | Better Auth |
+| Auth | Better Auth (email + password) |
 | Styling | Tailwind CSS |
 | Language | TypeScript |
+
+## Live Demo
+
+> After Vercel project rename, update this link:
+> `https://pollforge.vercel.app` (auto-generated from repo name) — replace with your actual deployment URL.
 
 ## Getting Started
 
@@ -58,7 +63,7 @@ Online voting system MVP built with Next.js 15, Neon PostgreSQL, Drizzle ORM, an
 
 ### Admin Access
 
-An admin account is created automatically by the seed script. Contact the system administrator for credentials.
+An admin account is created automatically by the seed script (`admin@pollforge.vercel.app`). Contact the system administrator for credentials.
 
 > The `ADMIN_PASSWORD_HASH` in `.env` is required for seeding. Never commit `.env` to version control.
 
@@ -92,19 +97,19 @@ src/
 │   │   └── election/[id]/        # Admin election detail
 │   ├── sign-in/                  # Sign-in page
 │   ├── sign-up/                  # Sign-up page
-│   ├── page.tsx                  # Home (redirects if unauthenticated)
-│   └── layout.tsx                # Root layout with conditional nav
+│   ├── page.tsx                  # Home (marketing + CTA)
+│   └── layout.tsx                # Root layout with PollForge branding
 ├── db/
 │   ├── schema.ts                 # All Drizzle table definitions
 │   ├── index.ts                  # Drizzle client
-│   └── seed.ts                   # Seed script
+│   └── seed.ts                   # Seed script (creates admin@pollforge.vercel.app)
 ├── lib/
 │   ├── auth.ts                   # Better Auth configuration
 │   ├── admin.ts                  # Admin role guard helper
 │   └── elections.ts              # Auto-close expired elections
 └── components/
-    └── Header.tsx                # Nav with role-based links
-middleware.ts                     # Route protection
+    └── Header.tsx                # Nav with role-based links (PollForge brand)
+proxy.ts                         # Route protection (auth guard for /election, /results, /admin)
 ```
 
 ## API Routes
@@ -140,5 +145,11 @@ middleware.ts                     # Route protection
 
 - **Vote Anonymity**: The `votes` table stores no user identity. The `voteReceipts` table tracks who voted (for enforcement) without linking to what they voted for.
 - **Atomic Voting**: Vote casting uses a Drizzle transaction — the receipt and vote are inserted together, preventing partial failures.
-- **Role-Based Access**: Admin routes enforce `role === "admin"` via `requireAdmin()` middleware helper.
+- **Role-Based Access**: Admin routes enforce `role === "admin"` via `requireAdmin()` helper.
 - **Auto-Close**: Expired elections are automatically closed on every request to `GET /api/elections`, `GET /api/elections/:id`, and `POST /api/votes`.
+
+## Repository
+
+- GitHub: `https://github.com/androdotdev/pollforge` (renamed from `votesys`)
+- Previous name references (`votesys`, `VoteSys`, `voting-sys`) have been replaced with `PollForge` / `pollforge`. See `git log` for rename commit.
+

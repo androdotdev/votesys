@@ -10,7 +10,7 @@ export default function Home() {
           {/* Left: Text + CTAs */}
           <div className="flex-1 text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-800">
-              VoteSys
+              PollForge
             </h1>
             <p className="mt-4 text-xl text-gray-600">
               Secure, transparent, and accessible online voting for everyone.
