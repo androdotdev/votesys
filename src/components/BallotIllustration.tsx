@@ -10,13 +10,13 @@ export default function BallotIllustration() {
         </filter>
       </defs>
 
-      <rect x="12" y="38" width="72" height="50" fill="#0f766e" filter="url(#boxshadow)"/>
+      <rect x="12" y="38" width="72" height="50" fill="#4338ca" filter="url(#boxshadow)"/>
 
-      <polygon points="12,38 84,38 78,28 18,28" fill="#14b8a6"/>
+      <polygon points="12,38 84,38 78,28 18,28" fill="#4f46e5"/>
 
-      <polygon points="84,38 84,88 78,82 78,28" fill="#0d5f58"/>
+      <polygon points="84,38 84,88 78,82 78,28" fill="#3730a3"/>
 
-      <polygon points="36,34 60,34 58,30 38,30" fill="#0a4f49"/>
+      <polygon points="36,34 60,34 58,30 38,30" fill="#1e1b4b"/>
 
       <g filter="url(#papershadow)">
         <g transform="rotate(-6, 48, 38)">
@@ -27,8 +27,8 @@ export default function BallotIllustration() {
         </g>
       </g>
 
-      <line x1="30" y1="14" x2="30" y2="26" stroke="#0d9488" strokeWidth="2.5" strokeLinecap="square" opacity="0.7"/>
-      <line x1="25" y1="18" x2="25" y2="28" stroke="#0d9488" strokeWidth="2" strokeLinecap="square" opacity="0.4"/>
+      <line x1="30" y1="14" x2="30" y2="26" stroke="#6366f1" strokeWidth="2.5" strokeLinecap="square" opacity="0.7"/>
+      <line x1="25" y1="18" x2="25" y2="28" stroke="#818cf8" strokeWidth="2" strokeLinecap="square" opacity="0.4"/>
     </svg>
   );
 }
