@@ -33,9 +33,15 @@ export default async function Home() {
                   <Link href="/elections" className="bg-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-white hover:bg-indigo-700 text-center">
                     Browse Elections
                   </Link>
-                  <Link href={isAdmin ? "/admin" : "/elections"} className="border-2 border-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-indigo-600 hover:bg-indigo-50 text-center">
-                    {isAdmin ? "Admin Dashboard" : "View Elections"}
-                  </Link>
+                  {isAdmin ? (
+                    <Link href="/admin" className="border-2 border-indigo-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-indigo-600 hover:bg-indigo-50 text-center">
+                      Admin Dashboard
+                    </Link>
+                  ) : (
+                    <Link href="#how" className="border-2 border-slate-300 bg-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold text-slate-700 hover:border-indigo-600 hover:text-indigo-600 text-center">
+                      How it Works
+                    </Link>
+                  )}
                 </>
               ) : (
                 <>
@@ -58,7 +64,7 @@ export default async function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
+      <section id="how" className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-14">
         <h2 className="text-2xl font-bold text-center mb-10">How It Works</h2>
         <div className="grid gap-8 sm:grid-cols-3">
           <div className="border-2 border-slate-300 bg-white p-6 sm:p-8 text-center">
