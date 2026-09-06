@@ -40,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# synopsis drafts — local only
+synopsis/
+BCA 5th semester synopsis sample.pdf
