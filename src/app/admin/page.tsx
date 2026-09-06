@@ -78,7 +78,7 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl px-6 py-12 text-center">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-12 text-center">
         <p className="text-lg">Loading dashboard...</p>
       </div>
     );
@@ -86,9 +86,9 @@ export default function AdminDashboard() {
 
   if (error) {
     return (
-      <div className="mx-auto max-w-4xl px-6 py-12 text-center">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-12 text-center">
         <p className="text-lg text-red-700 font-bold">{error}</p>
-        <Link href="/" className="mt-4 inline-block text-lg font-bold text-teal-700">
+        <Link href="/" className="mt-4 inline-block text-lg font-bold text-indigo-600">
           Back to home
         </Link>
       </div>
@@ -96,105 +96,84 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-10">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-10">
       <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
         <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-        <Link href="/" className="text-lg font-bold text-teal-700">
+        <Link href="/" className="text-lg font-bold text-indigo-600">
           Back to site
         </Link>
       </div>
 
       {elections.length === 0 ? (
-        <div className="border-2 border-gray-400 bg-white p-8 text-center">
-          <p className="text-lg text-gray-600">No elections yet</p>
+        <div className="border-2 border-slate-300 bg-white p-8 text-center">
+          <p className="text-lg text-slate-600">No elections yet</p>
         </div>
       ) : (
-        <div className="border-2 border-gray-400 bg-white">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead className="border-b-2 border-gray-400 bg-gray-50">
-                <tr>
-                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Election</th>
-                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Status</th>
-                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Votes</th>
-                  <th className="px-3 sm:px-6 py-4 text-base font-bold text-gray-700">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {elections.map((election) => (
-                  <tr key={election.id} className="border-b border-gray-200 last:border-b-0">
-                    <td className="px-3 sm:px-6 py-4">
-                      <Link
-                        href={`/admin/election/${election.id}`}
-                        className="text-base font-bold text-gray-800 hover:text-teal-700 break-words"
-                      >
-                        {election.title}
-                      </Link>
-                      <p className="text-sm text-gray-500 mt-1">
-                        Closes: {new Date(election.endsAt).toLocaleDateString("en-IN", {
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </p>
-                    </td>
-                    <td className="px-3 sm:px-6 py-4">
-                      <span
-                        className={`inline-block border-2 px-3 py-1 text-sm font-bold uppercase tracking-wide ${
-                          election.status === "open"
-                            ? "border-emerald-600 bg-emerald-50 text-emerald-800"
-                            : election.status === "closed"
-                            ? "border-gray-500 bg-gray-100 text-gray-700"
-                            : "border-amber-600 bg-amber-50 text-amber-800"
-                        }`}
-                      >
-                        {election.status}
-                      </span>
-                    </td>
-                    <td className="px-3 sm:px-6 py-4">
-                      <span className="text-lg font-bold">{election.totalVotes}</span>
-                    </td>
-                    <td className="px-3 sm:px-6 py-4">
-                      <div className="flex flex-col gap-2">
-                        {election.status === "draft" && (
-                          <button
-                            onClick={() => updateStatus(election.id, "open")}
-                            className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800"
-                          >
-                            Open
-                          </button>
-                        )}
-                        {election.status === "open" && (
-                          <button
-                            onClick={() => updateStatus(election.id, "closed")}
-                            className="bg-gray-700 px-4 py-3 text-sm font-bold text-white hover:bg-gray-800"
-                          >
-                            Close
-                          </button>
-                        )}
-                        <Link
-                          href={`/admin/election/${election.id}`}
-                          className="border-2 border-gray-400 px-4 py-3 text-sm font-bold text-center hover:border-teal-600 hover:text-teal-700"
-                        >
-                          Details
-                        </Link>
-                        <button
-                          onClick={() => deleteElection(election.id)}
-                          className="border-2 border-red-300 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <>
+          {/* Mobile cards */}
+          <div className="grid gap-4 sm:hidden">
+            {elections.map((election) => (
+              <div key={election.id} className="border-2 border-slate-300 bg-white p-4">
+                <Link href={`/admin/election/${election.id}`} className="text-base font-bold text-slate-800 hover:text-indigo-600 break-words">
+                  {election.title}
+                </Link>
+                <p className="text-sm text-slate-500 mt-1">Closes: {new Date(election.endsAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>
+                <div className="mt-3 flex items-center gap-3">
+                  <span className={`inline-block border-2 px-3 py-1 text-xs font-bold uppercase tracking-wide ${election.status === "open" ? "border-emerald-600 bg-emerald-50 text-emerald-800" : election.status === "closed" ? "border-slate-500 bg-slate-100 text-slate-700" : "border-amber-600 bg-amber-50 text-amber-800"}`}>{election.status}</span>
+                  <span className="text-sm font-bold">{election.totalVotes} votes</span>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  {election.status === "draft" && <button onClick={() => updateStatus(election.id, "open")} className="bg-emerald-700 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-800">Open</button>}
+                  {election.status === "open" && <button onClick={() => updateStatus(election.id, "closed")} className="bg-slate-700 px-3 py-2 text-sm font-bold text-white hover:bg-slate-800">Close</button>}
+                  <Link href={`/admin/election/${election.id}`} className="border-2 border-slate-300 px-3 py-2 text-sm font-bold text-center hover:border-indigo-600 hover:text-indigo-600">Details</Link>
+                  <button onClick={() => deleteElection(election.id)} className="col-span-2 border-2 border-red-300 px-3 py-2 text-sm font-bold text-red-700 hover:bg-red-50">Delete</button>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
+          {/* Desktop table */}
+          <div className="hidden sm:block border-2 border-slate-300 bg-white">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="border-b-2 border-slate-300 bg-slate-50">
+                  <tr>
+                    <th className="px-3 sm:px-6 py-4 text-base font-bold text-slate-700">Election</th>
+                    <th className="px-3 sm:px-6 py-4 text-base font-bold text-slate-700">Status</th>
+                    <th className="px-3 sm:px-6 py-4 text-base font-bold text-slate-700">Votes</th>
+                    <th className="px-3 sm:px-6 py-4 text-base font-bold text-slate-700">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {elections.map((election) => (
+                    <tr key={election.id} className="border-b border-slate-200 last:border-b-0">
+                      <td className="px-3 sm:px-6 py-4">
+                        <Link href={`/admin/election/${election.id}`} className="text-base font-bold text-slate-800 hover:text-indigo-600 break-words">
+                          {election.title}
+                        </Link>
+                        <p className="text-sm text-slate-500 mt-1">Closes: {new Date(election.endsAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>
+                      </td>
+                      <td className="px-3 sm:px-6 py-4">
+                        <span className={`inline-block border-2 px-3 py-1 text-sm font-bold uppercase tracking-wide ${election.status === "open" ? "border-emerald-600 bg-emerald-50 text-emerald-800" : election.status === "closed" ? "border-slate-500 bg-slate-100 text-slate-700" : "border-amber-600 bg-amber-50 text-amber-800"}`}>{election.status}</span>
+                      </td>
+                      <td className="px-3 sm:px-6 py-4"><span className="text-lg font-bold">{election.totalVotes}</span></td>
+                      <td className="px-3 sm:px-6 py-4">
+                        <div className="flex flex-col gap-2">
+                          {election.status === "draft" && <button onClick={() => updateStatus(election.id, "open")} className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">Open</button>}
+                          {election.status === "open" && <button onClick={() => updateStatus(election.id, "closed")} className="bg-slate-700 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800">Close</button>}
+                          <Link href={`/admin/election/${election.id}`} className="border-2 border-slate-300 px-4 py-3 text-sm font-bold text-center hover:border-indigo-600 hover:text-indigo-600">Details</Link>
+                          <button onClick={() => deleteElection(election.id)} className="border-2 border-red-300 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500">Delete</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
 
-      <div className="mt-8 border-2 border-gray-400 bg-white p-6">
+      <div className="mt-8 border-2 border-slate-300 bg-white p-6">
         <h2 className="text-xl font-bold mb-4">Create New Election</h2>
         <form
           onSubmit={async (e) => {
@@ -219,7 +198,7 @@ export default function AdminDashboard() {
           className="space-y-4"
         >
           <div>
-            <label htmlFor="title" className="block text-base font-bold text-gray-700">
+            <label htmlFor="title" className="block text-base font-bold text-slate-700">
               Election Title
             </label>
             <input
@@ -227,12 +206,12 @@ export default function AdminDashboard() {
               name="title"
               type="text"
               required
-              className="mt-2 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+              className="mt-2 w-full border-2 border-slate-300 px-4 py-3 text-base focus:border-indigo-600 focus:outline-none"
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="startsAt" className="block text-base font-bold text-gray-700">
+              <label htmlFor="startsAt" className="block text-base font-bold text-slate-700">
                 Start Date
               </label>
               <input
@@ -240,11 +219,11 @@ export default function AdminDashboard() {
                 name="startsAt"
                 type="date"
                 required
-                className="mt-2 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+                className="mt-2 w-full border-2 border-slate-300 px-4 py-3 text-base focus:border-indigo-600 focus:outline-none"
               />
             </div>
             <div>
-              <label htmlFor="endsAt" className="block text-base font-bold text-gray-700">
+              <label htmlFor="endsAt" className="block text-base font-bold text-slate-700">
                 End Date
               </label>
               <input
@@ -252,13 +231,13 @@ export default function AdminDashboard() {
                 name="endsAt"
                 type="date"
                 required
-                className="mt-2 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+                className="mt-2 w-full border-2 border-slate-300 px-4 py-3 text-base focus:border-indigo-600 focus:outline-none"
               />
             </div>
           </div>
           <button
             type="submit"
-            className="bg-teal-700 px-6 py-3 text-base font-bold text-white hover:bg-teal-800"
+            className="bg-indigo-600 px-6 py-3 text-base font-bold text-white hover:bg-indigo-700"
           >
             Create Election
           </button>

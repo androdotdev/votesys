@@ -59,13 +59,13 @@ export default function PasswordDropdown({ onClose }: PasswordDropdownProps) {
   };
 
   return (
-    <div className="absolute right-0 top-full mt-2 w-full max-w-sm sm:w-80 border-2 border-gray-400 bg-white z-50">
-      <div className="border-b-2 border-gray-400 px-6 py-4">
+    <div className="absolute right-0 top-full mt-2 w-full max-w-sm sm:w-80 border-2 border-slate-300 bg-white z-50">
+      <div className="border-b-2 border-slate-300 px-6 py-4">
         <h3 className="text-lg font-bold">Change Password</h3>
       </div>
       <form onSubmit={handleSubmit} className="p-6 space-y-4">
         <div>
-          <label htmlFor="currentPassword" className="block text-sm font-bold text-gray-700">
+          <label htmlFor="currentPassword" className="block text-sm font-bold text-slate-700">
             Current Password
           </label>
           <input
@@ -74,11 +74,11 @@ export default function PasswordDropdown({ onClose }: PasswordDropdownProps) {
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             required
-            className="mt-1 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+            className="mt-1 w-full border-2 border-slate-300 px-4 py-3 text-base focus:border-indigo-600 focus:outline-none"
           />
         </div>
         <div>
-          <label htmlFor="newPassword" className="block text-sm font-bold text-gray-700">
+          <label htmlFor="newPassword" className="block text-sm font-bold text-slate-700">
             New Password
           </label>
           <input
@@ -87,11 +87,11 @@ export default function PasswordDropdown({ onClose }: PasswordDropdownProps) {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
-            className="mt-1 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+            className="mt-1 w-full border-2 border-slate-300 px-4 py-3 text-base focus:border-indigo-600 focus:outline-none"
           />
         </div>
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-bold text-gray-700">
+          <label htmlFor="confirmPassword" className="block text-sm font-bold text-slate-700">
             Confirm New Password
           </label>
           <input
@@ -100,7 +100,7 @@ export default function PasswordDropdown({ onClose }: PasswordDropdownProps) {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="mt-1 w-full border-2 border-gray-400 px-4 py-3 text-base focus:border-teal-600 focus:outline-none"
+            className="mt-1 w-full border-2 border-slate-300 px-4 py-3 text-base focus:border-indigo-600 focus:outline-none"
           />
         </div>
         {error && (
@@ -112,7 +112,7 @@ export default function PasswordDropdown({ onClose }: PasswordDropdownProps) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-teal-700 px-4 py-3 text-base font-bold text-white hover:bg-teal-800 disabled:opacity-50"
+          className="w-full bg-indigo-600 px-4 py-3 text-base font-bold text-white hover:bg-indigo-700 disabled:opacity-50"
         >
           {loading ? "Updating..." : "Change Password"}
         </button>

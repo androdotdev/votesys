@@ -47,9 +47,9 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="mx-auto max-w-lg px-6 py-16">
-      <div className="border-2 border-gray-400 bg-white p-6 sm:p-8">
-        <h1 className="text-2xl font-bold text-center text-gray-800">Create Account</h1>
+    <div className="mx-auto max-w-lg px-4 sm:px-6 py-10 sm:py-16">
+      <div className="border-2 border-slate-300 bg-white p-6 sm:p-8">
+        <h1 className="text-2xl font-bold text-center text-slate-800">Create Account</h1>
 
         {error && (
           <p className="mt-4 text-base font-bold text-red-700 text-center">{error}</p>
@@ -57,7 +57,7 @@ export default function SignUpPage() {
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div>
-            <label htmlFor="name" className="block text-base font-bold text-gray-700">
+            <label htmlFor="name" className="block text-base font-bold text-slate-700">
               Full Name
             </label>
             <input
@@ -66,11 +66,11 @@ export default function SignUpPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="mt-2 w-full border-2 border-gray-400 px-4 py-4 text-base focus:border-teal-600 focus:outline-none"
+              className="mt-2 w-full border-2 border-slate-300 px-4 py-4 text-base focus:border-indigo-600 focus:outline-none"
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-base font-bold text-gray-700">
+            <label htmlFor="email" className="block text-base font-bold text-slate-700">
               Email
             </label>
             <input
@@ -79,11 +79,11 @@ export default function SignUpPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-2 w-full border-2 border-gray-400 px-4 py-4 text-base focus:border-teal-600 focus:outline-none"
+              className="mt-2 w-full border-2 border-slate-300 px-4 py-4 text-base focus:border-indigo-600 focus:outline-none"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-base font-bold text-gray-700">
+            <label htmlFor="password" className="block text-base font-bold text-slate-700">
               Password
             </label>
             <input
@@ -92,21 +92,21 @@ export default function SignUpPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-2 w-full border-2 border-gray-400 px-4 py-4 text-base focus:border-teal-600 focus:outline-none"
+              className="mt-2 w-full border-2 border-slate-300 px-4 py-4 text-base focus:border-indigo-600 focus:outline-none"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-teal-700 px-6 py-4 text-lg font-bold text-white hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full bg-indigo-600 px-6 py-4 text-lg font-bold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? "Creating account..." : "Create Account"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-base text-gray-500">
+        <p className="mt-6 text-center text-base text-slate-500">
           Already have an account?{" "}
-          <Link href="/sign-in" className="font-bold text-teal-700">
+          <Link href="/sign-in" className="font-bold text-indigo-600">
             Sign in
           </Link>
         </p>

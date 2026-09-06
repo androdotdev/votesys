@@ -102,7 +102,7 @@ export default function AdminElectionPage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl px-6 py-12 text-center">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-12 text-center">
         <p className="text-lg">Loading...</p>
       </div>
     );
@@ -110,9 +110,9 @@ export default function AdminElectionPage() {
 
   if (!report) {
     return (
-      <div className="mx-auto max-w-4xl px-6 py-12 text-center">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-12 text-center">
         <p className="text-lg">Election not found</p>
-        <Link href="/admin" className="mt-4 inline-block text-lg font-bold text-teal-700">
+        <Link href="/admin" className="mt-4 inline-block text-lg font-bold text-indigo-600">
           Back to dashboard
         </Link>
       </div>
@@ -127,20 +127,20 @@ export default function AdminElectionPage() {
     });
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-10">
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-8 sm:py-10">
       <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold">{report.election.title}</h1>
-          <p className="text-base text-gray-500 mt-1">
+          <p className="text-base text-slate-500 mt-1">
             {formatDate(report.election.startsAt)} — {formatDate(report.election.endsAt)}
           </p>
         </div>
-        <Link href="/admin" className="text-lg font-bold text-teal-700">
+        <Link href="/admin" className="text-lg font-bold text-indigo-600">
           Back to dashboard
         </Link>
       </div>
 
-      <div className="border-2 border-gray-400 bg-white p-6 mb-8">
+      <div className="border-2 border-slate-300 bg-white p-6 mb-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <span className="text-lg font-bold">Total Votes:</span>
@@ -152,7 +152,7 @@ export default function AdminElectionPage() {
                 report.election.status === "open"
                   ? "border-emerald-600 bg-emerald-50 text-emerald-800"
                   : report.election.status === "closed"
-                  ? "border-gray-500 bg-gray-100 text-gray-700"
+                  ? "border-slate-500 bg-slate-100 text-slate-700"
                   : "border-amber-600 bg-amber-50 text-amber-800"
               }`}
             >
@@ -172,14 +172,14 @@ export default function AdminElectionPage() {
           {report.election.status === "open" && (
             <button
               onClick={() => updateStatus("closed")}
-              className="bg-gray-700 px-4 py-3 text-sm font-bold text-white hover:bg-gray-800"
+              className="bg-slate-700 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800"
             >
               Close Voting
             </button>
           )}
           <button
             onClick={() => setShowVoters(!showVoters)}
-            className="border-2 border-gray-400 px-4 py-3 text-sm font-bold hover:border-teal-600 hover:text-teal-700"
+            className="border-2 border-slate-300 px-4 py-3 text-sm font-bold hover:border-indigo-600 hover:text-indigo-600"
           >
             {showVoters ? "Hide Voters" : "View Voters List"} ({voters.length})
           </button>
@@ -187,25 +187,25 @@ export default function AdminElectionPage() {
       </div>
 
       {showVoters && (
-        <div className="border-2 border-gray-400 bg-white mb-8">
-          <div className="border-b-2 border-gray-400 bg-gray-50 px-6 py-4">
+        <div className="border-2 border-slate-300 bg-white mb-8">
+          <div className="border-b-2 border-slate-300 bg-slate-50 px-6 py-4">
             <h2 className="text-xl font-bold">Voters List ({voters.length})</h2>
           </div>
           {voters.length === 0 ? (
-            <p className="p-6 text-base text-gray-500">No votes cast yet</p>
+            <p className="p-6 text-base text-slate-500">No votes cast yet</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="border-b border-gray-200">
+                <thead className="border-b border-slate-200">
                   <tr>
-                    <th className="px-6 py-3 text-base font-bold text-gray-700">#</th>
-                    <th className="px-6 py-3 text-base font-bold text-gray-700">User ID</th>
-                    <th className="px-6 py-3 text-base font-bold text-gray-700">Voted At</th>
+                    <th className="px-6 py-3 text-base font-bold text-slate-700">#</th>
+                    <th className="px-6 py-3 text-base font-bold text-slate-700">User ID</th>
+                    <th className="px-6 py-3 text-base font-bold text-slate-700">Voted At</th>
                   </tr>
                 </thead>
                 <tbody>
                   {voters.map((v, i) => (
-                    <tr key={v.userId} className="border-b border-gray-100 last:border-b-0">
+                    <tr key={v.userId} className="border-b border-slate-100 last:border-b-0">
                       <td className="px-6 py-3 text-base">{i + 1}</td>
                       <td className="px-6 py-3 text-sm font-mono">{v.userId}</td>
                       <td className="px-6 py-3 text-base">
@@ -220,25 +220,25 @@ export default function AdminElectionPage() {
         </div>
       )}
 
-      <div className="border-2 border-gray-400 bg-white p-6 mb-8">
+      <div className="border-2 border-slate-300 bg-white p-6 mb-8">
         <h2 className="text-xl font-bold mb-4">Candidates ({report.candidates.length})</h2>
         <div className="space-y-4">
           {report.candidates.map((c) => (
             <div
               key={c.candidateId}
-              className="border-2 border-gray-400 p-4 flex flex-wrap items-center justify-between gap-4"
+              className="border-2 border-slate-300 p-4 flex flex-wrap items-center justify-between gap-4"
             >
               <div>
                 <span className="text-lg font-bold">{c.candidateName}</span>
                 {c.description && (
-                  <p className="text-sm text-gray-500 mt-1">{c.description}</p>
+                  <p className="text-sm text-slate-500 mt-1">{c.description}</p>
                 )}
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
                   <span className="text-2xl font-bold">{c.voteCount}</span>
-                  <span className="text-sm text-gray-500 ml-1">votes</span>
-                  <p className="text-sm text-gray-500">
+                  <span className="text-sm text-slate-500 ml-1">votes</span>
+                  <p className="text-sm text-slate-500">
                     ({c.percentage.toFixed(1)}%)
                   </p>
                 </div>
@@ -253,7 +253,7 @@ export default function AdminElectionPage() {
           ))}
         </div>
 
-        <div className="mt-6 pt-6 border-t-2 border-gray-400">
+        <div className="mt-6 pt-6 border-t-2 border-slate-300">
           <h3 className="text-lg font-bold mb-3">Add Candidate</h3>
           <div className="flex flex-col gap-3 sm:flex-row">
             <input
@@ -261,19 +261,19 @@ export default function AdminElectionPage() {
               placeholder="Name"
               value={newCandidate.name}
               onChange={(e) => setNewCandidate({ ...newCandidate, name: e.target.value })}
-              className="border-2 border-gray-400 px-4 py-3 text-base flex-1 focus:border-teal-600 focus:outline-none"
+              className="border-2 border-slate-300 px-4 py-3 text-base flex-1 focus:border-indigo-600 focus:outline-none"
             />
             <input
               type="text"
               placeholder="Description (optional)"
               value={newCandidate.description}
               onChange={(e) => setNewCandidate({ ...newCandidate, description: e.target.value })}
-              className="border-2 border-gray-400 px-4 py-3 text-base flex-1 focus:border-teal-600 focus:outline-none"
+              className="border-2 border-slate-300 px-4 py-3 text-base flex-1 focus:border-indigo-600 focus:outline-none"
             />
             <button
               onClick={addCandidate}
               disabled={!newCandidate.name.trim()}
-              className="bg-teal-700 px-6 py-3 text-base font-bold text-white hover:bg-teal-800 disabled:opacity-50"
+              className="bg-indigo-600 px-6 py-3 text-base font-bold text-white hover:bg-indigo-700 disabled:opacity-50"
             >
               Add
             </button>
@@ -281,9 +281,9 @@ export default function AdminElectionPage() {
         </div>
       </div>
 
-      <div className="border-2 border-gray-400 bg-white p-6">
+      <div className="border-2 border-slate-300 bg-white p-6">
         <h2 className="text-xl font-bold mb-3">Report Summary</h2>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-slate-500">
           Generated at: {new Date(report.generatedAt).toLocaleString("en-IN")}
         </p>
         <p className="text-base mt-2">

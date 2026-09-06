@@ -81,7 +81,7 @@ export default function ElectionPage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-12 text-center">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-12 text-center">
         <p className="text-lg">Loading election...</p>
       </div>
     );
@@ -89,9 +89,9 @@ export default function ElectionPage() {
 
   if (!election) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-12 text-center">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-12 text-center">
         <p className="text-lg">Election not found</p>
-        <Link href="/" className="mt-4 inline-block text-lg font-bold text-teal-700">
+        <Link href="/" className="mt-4 inline-block text-lg font-bold text-indigo-600">
           Back to elections
         </Link>
       </div>
@@ -107,16 +107,16 @@ export default function ElectionPage() {
 
   if (election.status === "closed") {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-12">
-        <div className="border-2 border-gray-400 bg-white p-8 text-center">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-12">
+        <div className="border-2 border-slate-300 bg-white p-8 text-center">
           <h1 className="text-2xl font-bold">{election.title}</h1>
-          <span className="mt-3 inline-block border-2 border-gray-500 bg-gray-100 px-3 py-1 text-sm font-bold text-gray-700 uppercase tracking-wide">
+          <span className="mt-3 inline-block border-2 border-slate-500 bg-slate-100 px-3 py-1 text-sm font-bold text-slate-700 uppercase tracking-wide">
             Voting Closed
           </span>
-          <p className="mt-4 text-lg text-gray-500">This election has ended.</p>
+          <p className="mt-4 text-lg text-slate-500">This election has ended.</p>
           <Link
             href={`/results/${election.id}`}
-            className="mt-6 inline-block bg-teal-700 px-6 py-3 text-lg font-bold text-white hover:bg-teal-800"
+            className="mt-6 inline-block bg-indigo-600 px-6 py-3 text-lg font-bold text-white hover:bg-indigo-700"
           >
             View Results
           </Link>
@@ -127,13 +127,13 @@ export default function ElectionPage() {
 
   if (success) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-12">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-12">
         <div className="border-2 border-emerald-600 bg-emerald-50 p-8 text-center">
           <h1 className="text-2xl font-bold text-emerald-800">Your vote has been recorded</h1>
           <p className="mt-3 text-lg text-emerald-700">Thank you for participating in {election.title}.</p>
           <div className="mt-6 flex gap-6 justify-center">
-            <Link href="/" className="text-lg font-bold text-teal-700">Back to elections</Link>
-            <Link href={`/results/${election.id}`} className="text-lg font-bold text-teal-700">View results</Link>
+            <Link href="/" className="text-lg font-bold text-indigo-600">Back to elections</Link>
+            <Link href={`/results/${election.id}`} className="text-lg font-bold text-indigo-600">View results</Link>
           </div>
         </div>
       </div>
@@ -142,13 +142,13 @@ export default function ElectionPage() {
 
   if (hasVoted) {
     return (
-      <div className="mx-auto max-w-3xl px-6 py-12">
-        <div className="border-2 border-gray-400 bg-gray-50 p-8 text-center">
-          <h1 className="text-2xl font-bold text-gray-700">You have already voted</h1>
-          <p className="mt-3 text-lg text-gray-600">Your vote in {election.title} has been recorded. Results are anonymous.</p>
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-12">
+        <div className="border-2 border-slate-300 bg-slate-50 p-8 text-center">
+          <h1 className="text-2xl font-bold text-slate-700">You have already voted</h1>
+          <p className="mt-3 text-lg text-slate-600">Your vote in {election.title} has been recorded. Results are anonymous.</p>
           <div className="mt-6 flex gap-6 justify-center">
-            <Link href="/" className="text-lg font-bold text-teal-700">Back to elections</Link>
-            <Link href={`/results/${election.id}`} className="text-lg font-bold text-teal-700">View results</Link>
+            <Link href="/" className="text-lg font-bold text-indigo-600">Back to elections</Link>
+            <Link href={`/results/${election.id}`} className="text-lg font-bold text-indigo-600">View results</Link>
           </div>
         </div>
       </div>
@@ -156,9 +156,9 @@ export default function ElectionPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-10">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10">
       <h1 className="text-2xl font-bold">{election.title}</h1>
-      <div className="mt-3 flex flex-wrap items-center gap-4 text-base text-gray-600">
+      <div className="mt-3 flex flex-wrap items-center gap-4 text-base text-slate-600">
         <span>Opens: {formatDate(election.startsAt)}</span>
         <span>Closes: {formatDate(election.endsAt)}</span>
         <span className="inline-block border-2 border-emerald-600 bg-emerald-50 px-3 py-1 text-sm font-bold text-emerald-800 uppercase tracking-wide">
@@ -173,8 +173,8 @@ export default function ElectionPage() {
             key={candidate.id}
             className={`flex cursor-pointer items-start gap-5 border-2 p-6 transition-colors ${
               selectedCandidate === candidate.id
-                ? "border-teal-600 bg-teal-50"
-                : "border-gray-400 bg-white hover:border-teal-500"
+                ? "border-indigo-600 bg-indigo-50"
+                : "border-slate-300 bg-white hover:border-indigo-500"
             }`}
           >
             <input
@@ -183,12 +183,12 @@ export default function ElectionPage() {
               value={candidate.id}
               checked={selectedCandidate === candidate.id}
               onChange={() => setSelectedCandidate(candidate.id)}
-              className="mt-1 w-5 h-5 accent-teal-700"
+              className="mt-1 w-5 h-5 accent-indigo-600"
             />
             <div>
-              <span className="text-lg font-bold text-gray-800">{candidate.name}</span>
+              <span className="text-lg font-bold text-slate-800">{candidate.name}</span>
               {candidate.description && (
-                <p className="mt-1 text-base text-gray-500">{candidate.description}</p>
+                <p className="mt-1 text-base text-slate-500">{candidate.description}</p>
               )}
             </div>
           </label>
@@ -202,7 +202,7 @@ export default function ElectionPage() {
       <button
         onClick={handleVote}
         disabled={!selectedCandidate || voting}
-        className="mt-6 w-full bg-teal-700 px-6 py-4 text-lg font-bold text-white hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
+        className="mt-6 w-full bg-indigo-600 px-6 py-4 text-lg font-bold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {voting ? "Casting vote..." : "Confirm Your Vote"}
       </button>

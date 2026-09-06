@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1f2937;
+  --background: #f8fafc; /* slate-50 */
+  --foreground: #1e293b; /* slate-800 */
 }
 
 @theme inline {
@@ -12,15 +12,30 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 18px;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
   line-height: 1.6;
+  /* fluid base: 16px mobile → 18px desktop */
 }
 
-a {
-  text-decoration: none;
+@media (min-width: 1024px) {
+  body { font-size: 18px; }
 }
 
+a { text-decoration: none; }
+
+h1, h2, h3 { letter-spacing: -0.02em; }
+
+/* Improve tap targets on mobile */
+button, a { min-height: 44px; }
+@media (min-width: 640px) {
+  button, a { min-height: auto; }
+}
