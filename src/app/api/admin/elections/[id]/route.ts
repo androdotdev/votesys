@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
-import { elections } from "@/db/schema";
+import { elections, candidates, votes, voteReceipts } from "@/db/schema";
 import { requireAdmin } from "@/lib/admin";
 import { eq } from "drizzle-orm";
 
@@ -55,20 +55,24 @@ export async function DELETE(
   try {
     const { id } = await params;
 
-    const deleted = await db
-      .delete(elections)
-      .where(eq(elections.id, id))
-      .returning();
-
-    if (deleted.length === 0) {
-      return NextResponse.json(
-        { error: "Election not found" },
-        { status: 404 }
-      );
+    // Check exists first
+    const existing = await db.query.elections.findFirst({ where: eq(elections.id, id) });
+    if (!existing) {
+      return NextResponse.json({ error: "Election not found" }, { status: 404 });
     }
 
+    // Cascade delete dependents in transaction (FK: no action)
+    await db.transaction(async (tx) => {
+      // votes depends on candidate + election, must go first
+      await tx.delete(votes).where(eq(votes.electionId, id));
+      await tx.delete(voteReceipts).where(eq(voteReceipts.electionId, id));
+      await tx.delete(candidates).where(eq(candidates.electionId, id));
+      await tx.delete(elections).where(eq(elections.id, id));
+    });
+
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (e) {
+    console.error("DELETE election failed", e);
     return NextResponse.json(
       { error: "Failed to delete election" },
       { status: 500 }
