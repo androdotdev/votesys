@@ -41,6 +41,9 @@ export default function AdminElectionPage() {
   const [loading, setLoading] = useState(true);
   const [showVoters, setShowVoters] = useState(false);
   const [newCandidate, setNewCandidate] = useState({ name: "", description: "" });
+  const [addLoading, setAddLoading] = useState(false);
+  const [removeLoading, setRemoveLoading] = useState<string | null>(null);
+  const [statusLoading, setStatusLoading] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -59,44 +62,58 @@ export default function AdminElectionPage() {
 
   const addCandidate = async () => {
     if (!newCandidate.name.trim()) return;
-
-    const res = await fetch("/api/admin/candidates", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        electionId: id,
-        name: newCandidate.name,
-        description: newCandidate.description || null,
-      }),
-    });
-
-    if (res.ok) {
-      setNewCandidate({ name: "", description: "" });
-      window.location.reload();
+    setAddLoading(true);
+    try {
+      const res = await fetch("/api/admin/candidates", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          electionId: id,
+          name: newCandidate.name,
+          description: newCandidate.description || null,
+        }),
+      });
+      if (res.ok) {
+        setNewCandidate({ name: "", description: "" });
+        window.location.reload();
+      } else {
+        setAddLoading(false);
+      }
+    } catch {
+      setAddLoading(false);
     }
   };
 
   const removeCandidate = async (candidateId: string) => {
     if (!confirm("Remove this candidate?")) return;
-
-    const res = await fetch(`/api/admin/candidates/${candidateId}`, {
-      method: "DELETE",
-    });
-
-    if (res.ok) {
-      window.location.reload();
+    setRemoveLoading(candidateId);
+    try {
+      const res = await fetch(`/api/admin/candidates/${candidateId}`, { method: "DELETE" });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        setRemoveLoading(null);
+      }
+    } catch {
+      setRemoveLoading(null);
     }
   };
 
   const updateStatus = async (status: string) => {
-    const res = await fetch(`/api/admin/elections/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-
-    if (res.ok) {
-      window.location.reload();
+    setStatusLoading(status);
+    try {
+      const res = await fetch(`/api/admin/elections/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        setStatusLoading(null);
+      }
+    } catch {
+      setStatusLoading(null);
     }
   };
 
@@ -164,17 +181,19 @@ export default function AdminElectionPage() {
           {report.election.status === "draft" && (
             <button
               onClick={() => updateStatus("open")}
-              className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800"
+              disabled={!!statusLoading}
+              className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Open Voting
+              {statusLoading==="open" ? "Opening..." : "Open Voting"}
             </button>
           )}
           {report.election.status === "open" && (
             <button
               onClick={() => updateStatus("closed")}
-              className="bg-slate-700 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800"
+              disabled={!!statusLoading}
+              className="bg-slate-700 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Close Voting
+              {statusLoading==="closed" ? "Closing..." : "Close Voting"}
             </button>
           )}
           <button
@@ -244,9 +263,10 @@ export default function AdminElectionPage() {
                 </div>
                 <button
                   onClick={() => removeCandidate(c.candidateId)}
-                  className="border-2 border-red-300 px-3 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500"
+                  disabled={removeLoading===c.candidateId}
+                  className="border-2 border-red-300 px-3 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Remove
+                  {removeLoading===c.candidateId ? "Removing..." : "Remove"}
                 </button>
               </div>
             </div>
@@ -272,10 +292,10 @@ export default function AdminElectionPage() {
             />
             <button
               onClick={addCandidate}
-              disabled={!newCandidate.name.trim()}
-              className="bg-indigo-600 px-6 py-3 text-base font-bold text-white hover:bg-indigo-700 disabled:opacity-50"
+              disabled={!newCandidate.name.trim() || addLoading}
+              className="bg-indigo-600 px-6 py-3 text-base font-bold text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Add
+              {addLoading ? "Adding..." : "Add"}
             </button>
           </div>
         </div>

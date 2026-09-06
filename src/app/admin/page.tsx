@@ -19,6 +19,8 @@ export default function AdminDashboard() {
   const [elections, setElections] = useState<ElectionWithVotes[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -51,28 +53,31 @@ export default function AdminDashboard() {
   }, []);
 
   const updateStatus = async (id: string, status: string) => {
-    const res = await fetch(`/api/admin/elections/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-
-    if (res.ok) {
-      setElections((prev) =>
-        prev.map((e) => (e.id === id ? { ...e, status } : e))
-      );
+    setActionLoading(`${id}-${status}`);
+    try {
+      const res = await fetch(`/api/admin/elections/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      if (res.ok) {
+        setElections((prev) => prev.map((e) => (e.id === id ? { ...e, status } : e)));
+      }
+    } finally {
+      setActionLoading(null);
     }
   };
 
   const deleteElection = async (id: string) => {
     if (!confirm("Delete this election? This cannot be undone.")) return;
-
-    const res = await fetch(`/api/admin/elections/${id}`, {
-      method: "DELETE",
-    });
-
-    if (res.ok) {
-      setElections((prev) => prev.filter((e) => e.id !== id));
+    setActionLoading(`${id}-delete`);
+    try {
+      const res = await fetch(`/api/admin/elections/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setElections((prev) => prev.filter((e) => e.id !== id));
+      }
+    } finally {
+      setActionLoading(null);
     }
   };
 
@@ -123,10 +128,10 @@ export default function AdminDashboard() {
                   <span className="text-sm font-bold">{election.totalVotes} votes</span>
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-2">
-                  {election.status === "draft" && <button onClick={() => updateStatus(election.id, "open")} className="bg-emerald-700 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-800">Open</button>}
-                  {election.status === "open" && <button onClick={() => updateStatus(election.id, "closed")} className="bg-slate-700 px-3 py-2 text-sm font-bold text-white hover:bg-slate-800">Close</button>}
+                  {election.status === "draft" && <button onClick={() => updateStatus(election.id, "open")} disabled={!!actionLoading} className="bg-emerald-700 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed">{actionLoading===`${election.id}-open` ? "Opening..." : "Open"}</button>}
+                  {election.status === "open" && <button onClick={() => updateStatus(election.id, "closed")} disabled={!!actionLoading} className="bg-slate-700 px-3 py-2 text-sm font-bold text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed">{actionLoading===`${election.id}-closed` ? "Closing..." : "Close"}</button>}
                   <Link href={`/admin/election/${election.id}`} className="border-2 border-slate-300 px-3 py-2 text-sm font-bold text-center hover:border-indigo-600 hover:text-indigo-600">Details</Link>
-                  <button onClick={() => deleteElection(election.id)} className="col-span-2 border-2 border-red-300 px-3 py-2 text-sm font-bold text-red-700 hover:bg-red-50">Delete</button>
+                  <button onClick={() => deleteElection(election.id)} disabled={!!actionLoading} className="col-span-2 border-2 border-red-300 px-3 py-2 text-sm font-bold text-red-700 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed">{actionLoading===`${election.id}-delete` ? "Deleting..." : "Delete"}</button>
                 </div>
               </div>
             ))}
@@ -158,10 +163,10 @@ export default function AdminDashboard() {
                       <td className="px-3 sm:px-6 py-4"><span className="text-lg font-bold">{election.totalVotes}</span></td>
                       <td className="px-3 sm:px-6 py-4">
                         <div className="flex flex-col gap-2">
-                          {election.status === "draft" && <button onClick={() => updateStatus(election.id, "open")} className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">Open</button>}
-                          {election.status === "open" && <button onClick={() => updateStatus(election.id, "closed")} className="bg-slate-700 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800">Close</button>}
+                          {election.status === "draft" && <button onClick={() => updateStatus(election.id, "open")} disabled={!!actionLoading} className="bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed">{actionLoading===`${election.id}-open` ? "Opening..." : "Open"}</button>}
+                          {election.status === "open" && <button onClick={() => updateStatus(election.id, "closed")} disabled={!!actionLoading} className="bg-slate-700 px-4 py-3 text-sm font-bold text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed">{actionLoading===`${election.id}-closed` ? "Closing..." : "Close"}</button>}
                           <Link href={`/admin/election/${election.id}`} className="border-2 border-slate-300 px-4 py-3 text-sm font-bold text-center hover:border-indigo-600 hover:text-indigo-600">Details</Link>
-                          <button onClick={() => deleteElection(election.id)} className="border-2 border-red-300 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500">Delete</button>
+                          <button onClick={() => deleteElection(election.id)} disabled={!!actionLoading} className="border-2 border-red-300 px-4 py-3 text-sm font-bold text-red-700 hover:bg-red-50 hover:border-red-500 disabled:opacity-50 disabled:cursor-not-allowed">{actionLoading===`${election.id}-delete` ? "Deleting..." : "Delete"}</button>
                         </div>
                       </td>
                     </tr>
@@ -178,21 +183,26 @@ export default function AdminDashboard() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            const form = new FormData(e.currentTarget);
-            const body = {
-              title: form.get("title"),
-              startsAt: form.get("startsAt"),
-              endsAt: form.get("endsAt"),
-            };
-
-            const res = await fetch("/api/admin/elections", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-
-            if (res.ok) {
-              window.location.reload();
+            setCreating(true);
+            try {
+              const form = new FormData(e.currentTarget);
+              const body = {
+                title: form.get("title"),
+                startsAt: form.get("startsAt"),
+                endsAt: form.get("endsAt"),
+              };
+              const res = await fetch("/api/admin/elections", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              });
+              if (res.ok) {
+                window.location.reload();
+              } else {
+                setCreating(false);
+              }
+            } catch {
+              setCreating(false);
             }
           }}
           className="space-y-4"
@@ -237,9 +247,10 @@ export default function AdminDashboard() {
           </div>
           <button
             type="submit"
-            className="bg-indigo-600 px-6 py-3 text-base font-bold text-white hover:bg-indigo-700"
+            disabled={creating}
+            className="bg-indigo-600 px-6 py-3 text-base font-bold text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Create Election
+            {creating ? "Creating..." : "Create Election"}
           </button>
         </form>
       </div>
